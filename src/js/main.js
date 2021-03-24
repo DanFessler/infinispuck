@@ -1,31 +1,40 @@
-import Engine from '../engine/Engine'
-import Entity from '../engine/entity'
-import Vector2 from '../engine/vector2'
-import shipBehavior from './behaviors/ship'
-import RigidBody from '../engine/behaviors/rigidbody'
-import Renderer from '../engine/behaviors/renderer'
+import Engine from "../engine/Engine";
+import Entity from "../engine/entity";
+import Vector2 from "../engine/vector2";
+import shipBehavior from "./behaviors/ship";
+import Tilemap from "../engine/behaviors/tilemap.js";
+import RigidBody from "../engine/behaviors/rigidbody";
+import Renderer from "../engine/behaviors/renderer";
+import SpriteRenderer from "../engine/behaviors/spriteRenderer";
+import TilemapRenderer from "../engine/behaviors/tilemapRenderer";
+import tilesUrl from "../images/tiles.png";
 
-const canvas = document.querySelector('canvas')
-const ctx = canvas.getContext('2d')
-new Engine(ctx)
-
-canvas.width = innerWidth
-canvas.height = innerHeight
-
-addEventListener('resize', () => {
-    canvas.width = innerWidth
-    canvas.height = innerHeight
-})
+const tiles = new Image();
+tiles.src = tilesUrl;
+const game = new Engine(216, 384, 3, "game", "black");
 
 let ship = new Entity(
-    canvas.width / 2,
-    canvas.height / 2,
-    [new Renderer(20, 'blue'), new RigidBody(), new shipBehavior()],
-    [
-        new Entity(-5, -20, [new Renderer(10, 'red')]),
-        new Entity(-5, 20, [new Renderer(10, 'red')])
-    ]
-)
+  game.width / 2,
+  game.height / 2,
 
-Engine.game.addGameObject(ship)
-Engine.game.run()
+  [
+    new Renderer(16, "#1188ff"),
+    // new SpriteRenderer(tiles),
+    new RigidBody(),
+    new shipBehavior(),
+  ],
+  [
+    new Entity(-4, -16, [new Renderer(8, "red")]),
+    new Entity(-4, 16, [new Renderer(8, "red")]),
+  ]
+);
+
+let map = new Entity(
+  0,
+  0,
+  [new Tilemap(14, 25), new TilemapRenderer(tiles)],
+  [ship]
+);
+
+Engine.game.addGameObject(map);
+Engine.game.run();
