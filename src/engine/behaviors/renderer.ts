@@ -1,10 +1,10 @@
 import Behavior from "../behavior";
-import Vector2 from "../vector2";
-
-const g = 2500;
 
 class Renderer extends Behavior {
-  constructor(radius, color) {
+  radius: number;
+  color: string;
+
+  constructor(radius: number, color: string) {
     super();
     this.radius = radius;
     this.color = color;
@@ -12,10 +12,9 @@ class Renderer extends Behavior {
 
   start() {}
 
-  update = () => {};
+  update() {}
 
-  draw = (ctx) => {
-    // ctx.fillStyle = `white`;
+  draw(ctx: CanvasRenderingContext2D) {
     ctx.strokeStyle = this.color;
     ctx.beginPath();
     ctx.arc(0, 0, this.radius, 0, Math.PI * 2, false);
@@ -24,7 +23,7 @@ class Renderer extends Behavior {
     ctx.fill();
     ctx.stroke();
     ctx.closePath();
-  };
+  }
 }
 
 export default Renderer;

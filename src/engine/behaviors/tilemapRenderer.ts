@@ -1,7 +1,9 @@
 import Behavior from "../behavior";
 
 class TilemapRenderer extends Behavior {
-  constructor(image) {
+  image: HTMLImageElement;
+
+  constructor(image: HTMLImageElement) {
     super();
     this.image = image;
   }
@@ -10,7 +12,7 @@ class TilemapRenderer extends Behavior {
 
   update = () => {};
 
-  draw = (ctx) => {
+  draw = (ctx: CanvasRenderingContext2D) => {
     const self = this.entity;
     // ctx.drawImage(this.image, 0, 0, 16, 16, 0, 0, 16, 16);
     ctx.globalAlpha = 0.05;

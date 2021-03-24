@@ -1,11 +1,29 @@
 import Vector2 from "./vector2";
-import RigidBody from "./behaviors/rigidbody";
-import Renderer from "./behaviors/renderer";
+import Behavior from "./behavior";
 
 const TAU = Math.PI * 2;
 
+interface LooseObject {
+  [key: string]: any;
+}
+
 export default class Entity {
-  constructor(x, y, behaviors, children) {
+  parent: Entity;
+  position: { x: number; y: number };
+  angle: number;
+  game: any;
+  behaviors: Behavior[];
+  children: Entity[];
+  [key: string]: any;
+
+  constructor(x: number, y: number);
+  constructor(x: number, y: number, behaviors: Behavior[]);
+  constructor(
+    x: number,
+    y: number,
+    behaviors?: Behavior[],
+    children?: Entity[]
+  ) {
     this.parent = null;
     this.position = new Vector2(x, y);
     this.angle = 0;
@@ -17,7 +35,7 @@ export default class Entity {
       behaviors.forEach((behavior) => {
         behavior.entity = this;
         this.behaviors.push(behavior);
-        this[behavior.constructor.name] = behavior;
+        this[behavior.name] = behavior;
       });
     }
 
@@ -28,8 +46,6 @@ export default class Entity {
         this.children.push(child);
       });
     }
-
-    Entity.list.push(this);
   }
 
   init = () => {
@@ -50,12 +66,12 @@ export default class Entity {
     });
   };
 
-  draw = (ctx) => {
+  draw = (ctx: CanvasRenderingContext2D) => {
     ctx.save();
     ctx.translate(this.position.x, this.position.y);
     ctx.rotate(this.angle);
     this.behaviors
-      .filter((behavior) => behavior.draw !== undefined)
+      // .filter((behavior) => behavior.draw !== undefined)
       .forEach((behavior) => {
         behavior.draw(ctx);
       });
@@ -64,6 +80,4 @@ export default class Entity {
     });
     ctx.restore();
   };
-
-  static list = [];
 }

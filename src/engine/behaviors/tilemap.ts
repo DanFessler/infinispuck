@@ -1,20 +1,22 @@
 import Behavior from "../behavior";
 
 class Tilemap extends Behavior {
-  constructor(width, height) {
+  width: number;
+  height: number;
+
+  constructor(width: number, height: number) {
     super();
     this.width = width;
     this.height = height;
-    // this.x = -4;
-    // this.y = 0;
   }
+
   start() {}
 
   update = () => {
-    this.entity.position.y = (this.entity.position.y - 1) % (16 * 25);
+    // this.entity.position.y = (this.entity.position.y - 1) % (16 * 25);
   };
 
-  addForce = (v) => {};
+  addForce = (v: number) => {};
 }
 
 export default Tilemap;

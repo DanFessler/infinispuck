@@ -1,9 +1,10 @@
 import Engine from "../../engine/Engine";
 import Behavior from "../../engine/behavior";
-import Vector2 from "../../engine/vector2";
 
 class Bullet extends Behavior {
   lifespan = 600;
+  time: number;
+
   start = () => {
     this.time = Date.now();
   };

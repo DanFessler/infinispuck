@@ -1,28 +1,22 @@
 import Engine from "../engine/Engine";
 import Entity from "../engine/entity";
-import Vector2 from "../engine/vector2";
 import shipBehavior from "./behaviors/ship";
-import Tilemap from "../engine/behaviors/tilemap.js";
+import Tilemap from "../engine/behaviors/tilemap";
 import RigidBody from "../engine/behaviors/rigidbody";
 import Renderer from "../engine/behaviors/renderer";
-import SpriteRenderer from "../engine/behaviors/spriteRenderer";
 import TilemapRenderer from "../engine/behaviors/tilemapRenderer";
 import tilesUrl from "../images/tiles.png";
+import test from "./test";
 
 const tiles = new Image();
 tiles.src = tilesUrl;
-const game = new Engine(216, 384, 3, "game", "black");
+const game = new Engine(216, 384, 2, "game", "black");
 
 let ship = new Entity(
   game.width / 2,
   game.height / 2,
 
-  [
-    new Renderer(16, "#1188ff"),
-    // new SpriteRenderer(tiles),
-    new RigidBody(),
-    new shipBehavior(),
-  ],
+  [new Renderer(16, "#1188ff"), new RigidBody(), new shipBehavior()],
   [
     new Entity(-4, -16, [new Renderer(8, "red")]),
     new Entity(-4, 16, [new Renderer(8, "red")]),

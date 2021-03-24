@@ -13,18 +13,27 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.ts$/,
+        use: "ts-loader",
         exclude: /(node_modules|bower_components)/,
+      },
+      {
+        test: /\.js$/,
         use: {
           loader: "babel-loader",
         },
+        exclude: /(node_modules|bower_components)/,
       },
       {
         test: /\.(wav|png)$/,
         include: SRC,
         loader: "file-loader",
+        exclude: /(node_modules|bower_components)/,
       },
     ],
+  },
+  resolve: {
+    extensions: [".ts", ".js"],
   },
   plugins: [
     new BrowserSyncPlugin({

@@ -8,12 +8,23 @@ import Bullet from "./bullet";
 import shootSFX from "../../audio/shoot.wav";
 
 class bulletPrefab extends Entity {
-  constructor(x, y) {
+  constructor(x: number, y: number) {
     super(x, y, [new Renderer(3, "#11ff88"), new RigidBody(), new Bullet()]);
   }
 }
 
 class Ship extends Behavior {
+  delay: number;
+  lastShot: number;
+  burst: boolean;
+  keys: {
+    up: boolean;
+    down: boolean;
+    left: boolean;
+    right: boolean;
+    space: boolean;
+  };
+
   start = () => {
     this.entity.RigidBody.velocity.x = 0;
     this.delay = 100;
@@ -117,7 +128,7 @@ class Ship extends Behavior {
     );
   };
 
-  spawnBullet = (x, y, angle) => {
+  spawnBullet = (x: number, y: number, angle: number) => {
     let self = this.entity;
     let bullet = Engine.game.addGameObject(new bulletPrefab(x, y), self.parent);
 

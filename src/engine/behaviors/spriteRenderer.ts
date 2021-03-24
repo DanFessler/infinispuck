@@ -4,18 +4,20 @@ import Vector2 from "../vector2";
 const g = 2500;
 
 class SpriteRenderer extends Behavior {
-  constructor(image) {
+  image: HTMLImageElement;
+
+  constructor(image: HTMLImageElement) {
     super();
     this.image = image;
   }
 
   start() {}
 
-  update = () => {};
+  update() {}
 
-  draw = (ctx) => {
+  draw(ctx: CanvasRenderingContext2D) {
     ctx.drawImage(this.image, 0, 0, 16, 16, 0, 0, 16, 16);
-  };
+  }
 }
 
 export default SpriteRenderer;
