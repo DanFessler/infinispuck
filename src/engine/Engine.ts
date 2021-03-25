@@ -1,14 +1,25 @@
-export default class Engine {
-  static game = null;
+import Entity from "./entity";
 
-  constructor(width, height, scale, rootId, backgroundColor) {
+export default class Engine {
+  static game: Engine = null;
+  width: number;
+  height: number;
+  canvas: HTMLCanvasElement;
+  ctx: CanvasRenderingContext2D;
+  objects: Entity[];
+
+  constructor(
+    width: number,
+    height: number,
+    scale: number,
+    rootId: string,
+    backgroundColor: string
+  ) {
     const canvas = document.createElement("canvas");
     this.width = width;
     this.height = height;
     canvas.width = width;
     canvas.height = height;
-    canvas.style.width = width * scale + "px";
-    canvas.style.height = height * scale + "px";
     canvas.style.imageRendering = "pixelated";
     canvas.style.backgroundColor = backgroundColor;
 
@@ -25,11 +36,12 @@ export default class Engine {
     this.objects = [];
   }
 
-  addGameObject = (obj, parent) => {
+  addGameObject = (obj: Entity, parent: Entity) => {
     obj.game = this;
     if (!parent) this.objects.push(obj);
     else {
       parent.children.push(obj);
+      obj.parent = parent;
     }
     obj.init();
     return obj;
@@ -58,14 +70,21 @@ export default class Engine {
     requestAnimationFrame(this.tick);
   };
 
-  destroy = (target) => {
-    this.objects = this.objects.filter((obj) => obj !== target);
+  destroy = (target: Entity) => {
+    if (!target.parent) {
+      this.objects = this.objects.filter((obj) => obj !== target);
+    } else {
+      target.parent.children = target.parent.children.filter(
+        (obj) => obj !== target
+      );
+    }
   };
 
-  findObjectByType = (type) => {
+  findObjectByType = (type: string): Entity => {
     let foundObject = null;
     this.objects.forEach((object) => {
       object.behaviors.forEach((behavior) => {
+        // let constructor:any = behavior.constructor;
         if (behavior.constructor.name === type) {
           foundObject = behavior;
         }

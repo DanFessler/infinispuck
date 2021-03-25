@@ -6,11 +6,10 @@ import RigidBody from "../engine/behaviors/rigidbody";
 import Renderer from "../engine/behaviors/renderer";
 import TilemapRenderer from "../engine/behaviors/tilemapRenderer";
 import tilesUrl from "../images/tiles.png";
-import test from "./test";
 
 const tiles = new Image();
 tiles.src = tilesUrl;
-const game = new Engine(216, 384, 2, "game", "black");
+const game = new Engine(216, 384, 1, "game", "black");
 
 let ship = new Entity(
   game.width / 2,

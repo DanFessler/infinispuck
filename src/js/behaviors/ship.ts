@@ -133,7 +133,7 @@ class Ship extends Behavior {
     let bullet = Engine.game.addGameObject(new bulletPrefab(x, y), self.parent);
 
     bullet.RigidBody.velocity = new Vector2(Math.cos(angle), Math.sin(angle))
-      .mult(8)
+      .mult(6)
       .add(self.RigidBody.velocity);
   };
 }
