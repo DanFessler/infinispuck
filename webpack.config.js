@@ -29,6 +29,9 @@ module.exports = {
         include: SRC,
         loader: "file-loader",
         exclude: /(node_modules|bower_components)/,
+        options: {
+          name: "images/[name].[ext]",
+        },
       },
     ],
   },

@@ -18,6 +18,7 @@ export default class Entity {
 
   constructor(x: number, y: number);
   constructor(x: number, y: number, behaviors: Behavior[]);
+  constructor(x: number, y: number, behaviors: Behavior[], children: Entity[]);
   constructor(
     x: number,
     y: number,
