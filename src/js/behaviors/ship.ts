@@ -87,10 +87,23 @@ class Ship extends Behavior {
     if (this.keys.space && this.lastShot + this.delay < Date.now()) {
       this.shoot();
       this.lastShot = Date.now();
+      let force = -0.1;
+      self.RigidBody.addForce({
+        x: Math.cos(self.angle) * force,
+        y: Math.sin(self.angle) * force,
+      });
     }
 
     if (this.keys.up) {
       let force = 0.2;
+      self.RigidBody.addForce({
+        x: Math.cos(self.angle) * force,
+        y: Math.sin(self.angle) * force,
+      });
+    }
+
+    if (this.keys.down) {
+      let force = -0.1;
       self.RigidBody.addForce({
         x: Math.cos(self.angle) * force,
         y: Math.sin(self.angle) * force,

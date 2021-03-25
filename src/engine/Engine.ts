@@ -84,7 +84,6 @@ export default class Engine {
     let foundObject = null;
     this.objects.forEach((object) => {
       object.behaviors.forEach((behavior) => {
-        // let constructor:any = behavior.constructor;
         if (behavior.constructor.name === type) {
           foundObject = behavior;
         }

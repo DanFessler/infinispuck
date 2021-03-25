@@ -35,7 +35,7 @@ export default class Entity {
       behaviors.forEach((behavior) => {
         behavior.entity = this;
         this.behaviors.push(behavior);
-        this[behavior.name] = behavior;
+        this[behavior.constructor.name] = behavior;
       });
     }
 
