@@ -1,5 +1,6 @@
 import Vector2 from "./vector2";
 import Behavior from "./behavior";
+import Engine from "./Engine";
 
 const TAU = Math.PI * 2;
 
@@ -11,7 +12,7 @@ export default class Entity {
   parent: Entity;
   position: { x: number; y: number };
   angle: number;
-  game: any;
+  game: Engine;
   behaviors: Behavior[];
   children: Entity[];
   [key: string]: any;
@@ -69,8 +70,8 @@ export default class Entity {
 
   draw = (ctx: CanvasRenderingContext2D) => {
     ctx.save();
-    ctx.translate(Math.floor(this.position.x), Math.floor(this.position.y));
-    ctx.rotate(Math.floor(this.angle * (32 / Math.PI)) / (32 / Math.PI));
+    ctx.translate(this.position.x, this.position.y);
+    ctx.rotate((this.angle * (32 / Math.PI)) / (32 / Math.PI));
     this.behaviors
       // .filter((behavior) => behavior.draw !== undefined)
       .forEach((behavior) => {

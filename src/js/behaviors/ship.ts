@@ -117,6 +117,11 @@ class Ship extends Behavior {
     if (this.keys.right) {
       self.RigidBody.angularVelocity += 0.0075;
     }
+
+    self.game.cameraPos = {
+      x: self.position.x,
+      y: self.position.y,
+    };
   };
 
   shoot = () => {
@@ -130,13 +135,13 @@ class Ship extends Behavior {
       self.angle + (Math.random() - 0.5) / 10
     );
     this.spawnBullet(
-      self.position.x + Math.cos(self.angle + Math.PI / 2) * 16,
-      self.position.y + Math.sin(self.angle + Math.PI / 2) * 16,
+      self.position.x + Math.cos(self.angle + Math.PI / 2) * 12,
+      self.position.y + Math.sin(self.angle + Math.PI / 2) * 12,
       self.angle + 0.1 + (Math.random() - 0.5) / 5
     );
     this.spawnBullet(
-      self.position.x + Math.cos(self.angle - Math.PI / 2) * 16,
-      self.position.y + Math.sin(self.angle - Math.PI / 2) * 16,
+      self.position.x + Math.cos(self.angle - Math.PI / 2) * 12,
+      self.position.y + Math.sin(self.angle - Math.PI / 2) * 12,
       self.angle - 0.1 + (Math.random() - 0.5) / 5
     );
   };

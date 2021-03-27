@@ -7,6 +7,7 @@ export default class Engine {
   canvas: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
   objects: Entity[];
+  cameraPos: { x: number; y: number } = { x: 0, y: 0 };
 
   constructor(
     width: number,
@@ -62,9 +63,15 @@ export default class Engine {
 
     // draw each renderable game object
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+    this.ctx.save();
+    this.ctx.translate(
+      -this.cameraPos.x + this.width / 2,
+      -this.cameraPos.y + this.height / 2
+    );
     this.objects.forEach((object) => {
       object.draw(this.ctx);
     });
+    this.ctx.restore();
 
     // loop
     requestAnimationFrame(this.tick);
