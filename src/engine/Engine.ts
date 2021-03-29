@@ -1,5 +1,5 @@
-import Entity from "./Entity";
-import Vector2 from "./Vector2";
+import Entity from "./entity";
+import Vector2 from "./vector2";
 
 export default class Engine {
   static game: Engine = null;

@@ -1,5 +1,5 @@
-import Vector2 from "./Vector2";
-import Behavior from "./Behavior";
+import Vector2 from "./vector2";
+import Behavior from "./behavior";
 import Engine from "./Engine";
 
 const TAU = Math.PI * 2;

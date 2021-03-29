@@ -1,5 +1,5 @@
 import Engine from "../../engine/Engine";
-import Behavior from "../../engine/Behavior";
+import Behavior from "../../engine/behavior";
 import Tilemap from "../../engine/behaviors/tilemap";
 
 const chunks = [

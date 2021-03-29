@@ -1,4 +1,4 @@
-import Behavior from "../Behavior";
+import Behavior from "../behavior";
 
 class Renderer extends Behavior {
   radius: number;

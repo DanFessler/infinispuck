@@ -1,5 +1,5 @@
 import { Vector2 } from "..";
-import Behavior from "../Behavior";
+import Behavior from "../behavior";
 import Tilemap from "./tilemap";
 
 type rect = {
