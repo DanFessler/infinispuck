@@ -1,4 +1,4 @@
-import Behavior from "../behavior";
+import Behavior from "../Behavior";
 
 class Array2d<T> {
   arr: T[][];

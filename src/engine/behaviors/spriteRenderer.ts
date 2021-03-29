@@ -1,5 +1,5 @@
-import Behavior from "../behavior";
-import Vector2 from "../vector2";
+import Behavior from "../Behavior";
+import Vector2 from "../Vector2";
 
 const g = 2500;
 

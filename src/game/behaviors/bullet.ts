@@ -1,5 +1,5 @@
 import Engine from "../../engine/Engine";
-import Behavior from "../../engine/behavior";
+import Behavior from "../../engine/Behavior";
 
 class Bullet extends Behavior {
   lifespan = 200;
