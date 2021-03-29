@@ -6,7 +6,6 @@ class Array2d<T> {
     this.arr = [...new Array(height)].map(() =>
       new Array(width).fill(initialValue === undefined ? null : initialValue)
     );
-    console.log(this.arr);
   }
 
   set(x: number, y: number, value: T | null) {

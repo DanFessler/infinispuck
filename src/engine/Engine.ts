@@ -37,7 +37,7 @@ export default class Engine {
     this.objects = [];
   }
 
-  addGameObject = (obj: Entity, parent: Entity) => {
+  addGameObject = (obj: Entity, parent?: Entity) => {
     obj.game = this;
     if (!parent) this.objects.push(obj);
     else {

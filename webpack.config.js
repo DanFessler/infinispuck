@@ -5,10 +5,10 @@ const SRC = path.resolve(__dirname, "src");
 
 module.exports = {
   mode: "development",
-  entry: "./src/js/main.js",
+  entry: "./src/game/main.ts",
   output: {
     path: __dirname + "/dist/",
-    filename: "./js/main.bundle.js",
+    filename: "./game/main.bundle.js",
   },
   module: {
     rules: [

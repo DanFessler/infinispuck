@@ -5,7 +5,7 @@ import Vector2 from "../../engine/vector2";
 import Renderer from "../../engine/behaviors/renderer";
 import RigidBody from "../../engine/behaviors/rigidbody";
 import Bullet from "./bullet";
-import shootSFX from "../../audio/shoot.wav";
+import shootSFX from "../../assets/audio/shoot.wav";
 
 class bulletPrefab extends Entity {
   constructor(x: number, y: number) {
@@ -26,6 +26,7 @@ class Ship extends Behavior {
   };
 
   start = () => {
+    const rigidBody = this.entity.GetBehavior("RigidBody") as RigidBody;
     this.entity.RigidBody.velocity.x = 0;
     this.delay = 100;
     this.lastShot = Date.now();

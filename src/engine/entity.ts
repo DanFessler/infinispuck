@@ -50,25 +50,31 @@ export default class Entity {
     }
   }
 
-  init = () => {
+  GetBehavior(type: string): Behavior {
+    return this.behaviors.find((b) => {
+      b.constructor.name === type;
+    });
+  }
+
+  init() {
     this.behaviors.forEach((behavior) => {
       behavior.start();
     });
     this.children.forEach((child) => {
       child.init();
     });
-  };
+  }
 
-  update = () => {
+  update() {
     this.behaviors.forEach((behavior) => {
       behavior.update();
     });
     this.children.forEach((child) => {
       child.update();
     });
-  };
+  }
 
-  draw = (ctx: CanvasRenderingContext2D) => {
+  draw(ctx: CanvasRenderingContext2D) {
     ctx.save();
     ctx.translate(this.position.x, this.position.y);
     ctx.rotate((this.angle * (32 / Math.PI)) / (32 / Math.PI));
@@ -81,5 +87,5 @@ export default class Entity {
       child.draw(ctx);
     });
     ctx.restore();
-  };
+  }
 }
