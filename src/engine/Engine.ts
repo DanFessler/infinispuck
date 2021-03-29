@@ -1,4 +1,5 @@
 import Entity from "./entity";
+import Vector2 from "./vector2";
 
 export default class Engine {
   static game: Engine = null;
@@ -7,7 +8,7 @@ export default class Engine {
   canvas: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
   objects: Entity[];
-  cameraPos: { x: number; y: number } = { x: 0, y: 0 };
+  cameraPos: Vector2 = new Vector2();
 
   constructor(
     width: number,
@@ -49,9 +50,9 @@ export default class Engine {
   };
 
   run = () => {
-    this.objects.forEach((object) => {
-      object.init();
-    });
+    // this.objects.forEach((object) => {
+    //   object.init();
+    // });
     this.tick();
   };
 

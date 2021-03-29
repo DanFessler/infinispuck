@@ -1,3 +1,4 @@
+import { Vector2 } from "..";
 import Behavior from "../behavior";
 import Tilemap from "./tilemap";
 
@@ -24,14 +25,16 @@ class TilemapRenderer extends Behavior {
   update = () => {};
 
   getCameraTileBounds(): rect {
-    const cameraPos = this.entity.game.cameraPos;
-    cameraPos.x -= this.entity.game.width / 2;
-    cameraPos.y -= this.entity.game.height / 2;
+    const cameraPos = Vector2.Subtract(this.entity.game.cameraPos, {
+      x: this.entity.game.width / 2,
+      y: this.entity.game.height / 2,
+    });
+    const relativePos = Vector2.Subtract(cameraPos, this.entity.position);
 
-    let x1 = Math.floor(cameraPos.x / 16);
-    let y1 = Math.floor(cameraPos.y / 16);
-    let x2 = Math.floor((cameraPos.x + this.entity.game.width) / 16) + 1;
-    let y2 = Math.floor((cameraPos.y + this.entity.game.height) / 16) + 1;
+    let x1 = Math.floor(relativePos.x / 16);
+    let y1 = Math.floor(relativePos.y / 16);
+    let x2 = Math.floor((relativePos.x + this.entity.game.width) / 16) + 1;
+    let y2 = Math.floor((relativePos.y + this.entity.game.height) / 16) + 1;
 
     // clamp values to map bounds
     x1 = Math.min(Math.max(x1, 0), this.tilemap.width - 1);
@@ -52,12 +55,9 @@ class TilemapRenderer extends Behavior {
 
     const map: Tilemap = self.Tilemap;
 
-    ctx.globalAlpha = 0.1;
-
     let bounds = this.getCameraTileBounds();
-
-    for (let y = bounds.y1; y < bounds.y2; y++) {
-      for (let x = bounds.x1; x < bounds.x2; x++) {
+    for (let y = bounds.y1; y <= bounds.y2; y++) {
+      for (let x = bounds.x1; x <= bounds.x2; x++) {
         const tileIndex = this.tilemap.data.get(x, y);
         if (tileIndex !== null) {
           ctx.drawImage(
@@ -74,7 +74,6 @@ class TilemapRenderer extends Behavior {
         }
       }
     }
-    ctx.globalAlpha = 1;
   };
 }
 

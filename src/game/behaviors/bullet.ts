@@ -12,7 +12,7 @@ class Bullet extends Behavior {
   update = () => {
     let self = this.entity;
     if (this.time + this.lifespan < Date.now()) {
-      self.RigidBody.velocity = self.RigidBody.velocity.mult(0.85);
+      self.RigidBody.velocity = self.RigidBody.velocity.scale(0.85);
       self.Renderer.radius = self.Renderer.radius * 0.9;
     }
     if (self.Renderer.radius < 0.25) {

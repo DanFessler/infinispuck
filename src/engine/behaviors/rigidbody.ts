@@ -14,10 +14,12 @@ class RigidBody extends Behavior {
     entity.angle += this.angularVelocity;
   };
 
-  addForce = (v: { x: number; y: number }) => {
-    this.velocity.x += v.x;
-    this.velocity.y += v.y;
-  };
+  addForce(v: { x: number; y: number }) {
+    // this.velocity.x += v.x;
+    // this.velocity.y += v.y;
+    // console.log(this.velocity.add);
+    this.velocity = this.velocity.add(v);
+  }
 }
 
 export default RigidBody;

@@ -25,8 +25,14 @@ class Ship extends Behavior {
     space: boolean;
   };
 
-  start = () => {
+  start() {
     const rigidBody = this.entity.GetBehavior("RigidBody") as RigidBody;
+    this.entity.position = {
+      x: this.entity.game.width / 2,
+      y: this.entity.game.height / 2,
+    };
+    this.entity.angle = -Math.PI / 2;
+
     this.entity.RigidBody.velocity.x = 0;
     this.delay = 100;
     this.lastShot = Date.now();
@@ -78,11 +84,11 @@ class Ship extends Behavior {
         this.keys.right = false;
       }
     });
-  };
+  }
 
   update = () => {
     let self = this.entity;
-    self.RigidBody.velocity = self.RigidBody.velocity.mult(0.95);
+    self.RigidBody.velocity = self.RigidBody.velocity.scale(0.95);
     self.RigidBody.angularVelocity *= 0.9;
 
     if (this.keys.space && this.lastShot + this.delay < Date.now()) {
@@ -118,11 +124,6 @@ class Ship extends Behavior {
     if (this.keys.right) {
       self.RigidBody.angularVelocity += 0.0075;
     }
-
-    self.game.cameraPos = {
-      x: self.position.x,
-      y: self.position.y,
-    };
   };
 
   shoot = () => {
@@ -152,7 +153,7 @@ class Ship extends Behavior {
     let bullet = Engine.game.addGameObject(new bulletPrefab(x, y), self.parent);
 
     bullet.RigidBody.velocity = new Vector2(Math.cos(angle), Math.sin(angle))
-      .mult(6)
+      .scale(6)
       .add(self.RigidBody.velocity);
   };
 }

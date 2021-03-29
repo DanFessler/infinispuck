@@ -50,6 +50,11 @@ export default class Entity {
     }
   }
 
+  AddComponent(behavior: Behavior) {
+    this.behaviors.push(behavior);
+    behavior.start();
+  }
+
   GetBehavior(type: string): Behavior {
     return this.behaviors.find((b) => {
       b.constructor.name === type;
