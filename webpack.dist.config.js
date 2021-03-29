@@ -5,7 +5,7 @@ const SRC = path.resolve(__dirname, "src");
 
 module.exports = {
   mode: "development",
-  entry: "./src/game/main.js",
+  entry: "./src/game/main.ts",
   output: {
     path: __dirname + "/dist/",
     filename: "./game/main.bundle.js",
