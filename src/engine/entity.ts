@@ -81,7 +81,7 @@ export default class Entity {
 
   draw(ctx: CanvasRenderingContext2D) {
     ctx.save();
-    ctx.translate(this.position.x, this.position.y);
+    ctx.translate(Math.floor(this.position.x), Math.floor(this.position.y));
     ctx.rotate((this.angle * (32 / Math.PI)) / (32 / Math.PI));
     this.behaviors
       // .filter((behavior) => behavior.draw !== undefined)

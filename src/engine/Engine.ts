@@ -66,8 +66,8 @@ export default class Engine {
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
     this.ctx.save();
     this.ctx.translate(
-      -this.cameraPos.x + this.width / 2,
-      -this.cameraPos.y + this.height / 2
+      Math.floor(-this.cameraPos.x + this.width / 2),
+      Math.floor(-this.cameraPos.y + this.height / 2)
     );
     this.objects.forEach((object) => {
       object.draw(this.ctx);

@@ -22,7 +22,7 @@ class CameraTarget extends Behavior {
       x: self.position.x,
       y: Math.min(this.player.position.y, self.position.y),
     };
-    self.game.cameraPos = self.game.cameraPos.lerp(self.position, 0.1);
+    self.game.cameraPos = self.game.cameraPos.lerp(self.position, 1);
 
     if (self.game.cameraPos.y - self.game.height / 2 < map.position.y) {
       map.position.y -= 16 * 15;
