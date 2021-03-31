@@ -1,32 +1,29 @@
 import Behavior from "../behavior";
 
-class Array2d<T> {
-  arr: T[][];
-  constructor(width: number, height: number, initialValue?: T | null) {
-    this.arr = [...new Array(height)].map(() =>
-      new Array(width).fill(initialValue === undefined ? null : initialValue)
-    );
-  }
-
-  set(x: number, y: number, value: T | null) {
-    this.arr[y][x] = value;
-  }
-
-  get(x: number, y: number): T {
-    return this.arr[y][x];
-  }
-}
-
 class Tilemap extends Behavior {
   width: number;
   height: number;
-  data: Array2d<number>;
+  data: number[][];
 
   constructor(width: number, height: number) {
     super();
     this.width = width;
     this.height = height;
-    this.data = new Array2d(width, height);
+    this.fill(width, height);
+  }
+
+  fill(width: number, height: number, initialValue?: number | null) {
+    this.data = [...new Array(height)].map(() =>
+      new Array(width).fill(initialValue === undefined ? null : initialValue)
+    );
+  }
+
+  set(x: number, y: number, value: number | null) {
+    this.data[y][x] = value;
+  }
+
+  get(x: number, y: number): number {
+    return this.data[y][x];
   }
 }
 

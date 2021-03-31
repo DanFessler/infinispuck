@@ -50,7 +50,11 @@ class TilemapRenderer extends Behavior {
     };
   }
 
-  draw = (ctx: CanvasRenderingContext2D) => {
+  draw(ctx: CanvasRenderingContext2D) {
+    this.drawTiles(ctx);
+  }
+
+  drawTiles(ctx: CanvasRenderingContext2D) {
     const self = this.entity;
 
     const map: Tilemap = self.Tilemap;
@@ -58,7 +62,7 @@ class TilemapRenderer extends Behavior {
     let bounds = this.getCameraTileBounds();
     for (let y = bounds.y1; y <= bounds.y2; y++) {
       for (let x = bounds.x1; x <= bounds.x2; x++) {
-        const tileIndex = this.tilemap.data.get(x, y);
+        const tileIndex = this.tilemap.get(x, y);
         if (tileIndex !== null) {
           ctx.drawImage(
             this.image,
@@ -74,7 +78,7 @@ class TilemapRenderer extends Behavior {
         }
       }
     }
-  };
+  }
 }
 
 export default TilemapRenderer;

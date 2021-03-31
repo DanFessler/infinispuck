@@ -65,13 +65,15 @@ export default class Engine {
     // draw each renderable game object
     this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
     this.ctx.save();
-    this.ctx.translate(
-      Math.floor(-this.cameraPos.x + this.width / 2),
-      Math.floor(-this.cameraPos.y + this.height / 2)
-    );
-    this.objects.forEach((object) => {
-      object.draw(this.ctx);
-    });
+    {
+      this.ctx.translate(
+        Math.floor(-this.cameraPos.x + this.width / 2),
+        Math.floor(-this.cameraPos.y + this.height / 2)
+      );
+      this.objects.forEach((object) => {
+        object.draw(this.ctx);
+      });
+    }
     this.ctx.restore();
 
     // loop

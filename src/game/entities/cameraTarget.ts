@@ -1,9 +1,9 @@
 import { Entity, Behavior, Renderer, Vector2 } from "../../engine";
-import ship from "./ship";
+import player from "./player";
 import map from "./map";
 
 class CameraTarget extends Behavior {
-  player: Entity = ship;
+  player: Entity = player;
 
   constructor() {
     super();
@@ -25,7 +25,8 @@ class CameraTarget extends Behavior {
     self.game.cameraPos = self.game.cameraPos.lerp(self.position, 1);
 
     if (self.game.cameraPos.y - self.game.height / 2 < map.position.y) {
-      map.position.y -= 16 * 15;
+      // map.position.y -= 16 * 15;
+      map.MapGenerator.shift();
     }
   }
 }
