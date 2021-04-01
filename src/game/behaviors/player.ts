@@ -1,6 +1,7 @@
 import { RigidBody, Tilemap, Vector2 } from "../../engine";
 import Behavior from "../../engine/behavior";
 import map from "../entities/map";
+import shootSFX from "../../assets/audio/shoot.wav";
 
 const tilesize = 16;
 
@@ -96,6 +97,9 @@ class Player extends Behavior {
       console.log("Space");
       this.velocity.y = -this.jumpForce;
       this.jumping = true;
+      // let sound = new Audio(shootSFX);
+      // sound.volume = 0.25;
+      // sound.play();
     }
 
     if (this.keys.up) {
