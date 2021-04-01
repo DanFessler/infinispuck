@@ -27,10 +27,10 @@ class Ship extends Behavior {
 
   start() {
     const rigidBody = this.entity.GetBehavior("RigidBody") as RigidBody;
-    this.entity.position = {
-      x: this.entity.game.width / 2,
-      y: this.entity.game.height / 2,
-    };
+    this.entity.position = new Vector2(
+      this.entity.game.width / 2,
+      this.entity.game.height / 2
+    );
     this.entity.angle = -Math.PI / 2;
 
     this.entity.RigidBody.velocity.x = 0;

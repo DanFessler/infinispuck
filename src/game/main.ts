@@ -1,7 +1,7 @@
 import Engine from "../engine";
 
 // Entities
-import ship from "./entities/ship";
+// import ship from "./entities/ship";
 import player from "./entities/player";
 import map from "./entities/map";
 import cameraTarget from "./entities/cameraTarget";
