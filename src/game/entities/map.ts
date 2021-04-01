@@ -6,7 +6,7 @@ const tiles = new Image();
 tiles.src = tilesUrl;
 
 export default new Entity(0, 0, [
-  new Tilemap(15, 30),
+  new Tilemap(15, 45),
   new TilemapRenderer(tiles),
   new MapGenerator(),
 ]);

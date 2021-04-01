@@ -61,7 +61,7 @@ class MapGenerator extends Behavior {
 
   shift() {
     this.entity.position.y -= 16 * 15;
-    let deleted = this.map.data.splice(15, 15);
+    let deleted = this.map.data.splice(30, 15);
 
     let newChunk = chunks[Math.floor(Math.random() * 2)];
     this.map.data.splice(0, 0, ...newChunk);

@@ -6,7 +6,7 @@ import player from "./entities/player";
 import map from "./entities/map";
 import cameraTarget from "./entities/cameraTarget";
 
-const game = new Engine(240, 240, 1, "game", "black");
+const game = new Engine(240, 420, 1, "game", "black");
 
 game.addGameObject(map);
 game.addGameObject(player);
