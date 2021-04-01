@@ -10,7 +10,7 @@ interface LooseObject {
 
 export default class Entity {
   parent: Entity;
-  position: { x: number; y: number };
+  position: Vector2;
   angle: number;
   game: Engine;
   behaviors: Behavior[];

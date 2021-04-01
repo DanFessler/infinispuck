@@ -1,11 +1,19 @@
+import { RigidBody, Tilemap, Vector2 } from "../../engine";
 import Behavior from "../../engine/behavior";
+import map from "../entities/map";
+
+const tilesize = 16;
 
 class Player extends Behavior {
-  radius: number = 16;
-  color: string = "red";
-  delay: number;
-  lastShot: number;
-  burst: boolean;
+  radius = 16;
+  color = "red";
+  rigidBody: RigidBody;
+  map: Tilemap;
+  velocity: Vector2 = new Vector2(3, 0);
+  gravity = 0.2;
+  jumping = true;
+  jumpForce = 4.5;
+
   keys: {
     up: boolean;
     down: boolean;
@@ -15,10 +23,13 @@ class Player extends Behavior {
   };
 
   start() {
-    this.entity.position = {
-      x: this.entity.game.width / 2,
-      y: this.entity.game.height / 2,
-    };
+    this.rigidBody = this.entity.RigidBody;
+    this.map = map.Tilemap;
+
+    this.entity.position = new Vector2(
+      this.entity.game.width / 2,
+      this.entity.game.height / 2
+    );
 
     this.keys = {
       up: false,
@@ -28,12 +39,9 @@ class Player extends Behavior {
       space: false,
     };
 
-    this.burst = false;
-
     addEventListener("keydown", (e) => {
-      if (e.keyCode == 32 && this.burst == false) {
+      if (e.keyCode == 32) {
         this.keys.space = true;
-        this.burst = true;
       }
       if (e.keyCode == 40) {
         this.keys.down = true;
@@ -52,7 +60,7 @@ class Player extends Behavior {
     addEventListener("keyup", (e) => {
       if (e.keyCode == 32) {
         this.keys.space = false;
-        this.burst = false;
+        if (this.jumping) this.velocity.y *= 0.5;
       }
       if (e.keyCode == 40) {
         this.keys.down = false;
@@ -67,29 +75,132 @@ class Player extends Behavior {
         this.keys.right = false;
       }
     });
+
+    addEventListener("pointerdown", (e) => {
+      this.keys.space = true;
+    });
+    addEventListener("pointerup", (e) => {
+      this.keys.space = false;
+      if (this.jumping) this.velocity.y *= 0.5;
+    });
+
+    // this.rigidBody.addForce({ x: 1, y: 0 });
   }
 
   update() {
     let self = this.entity;
 
-    if (this.keys.space) {
+    // let delta: Vector2 = new Vector2();
+
+    if (this.keys.space && !this.jumping) {
+      console.log("Space");
+      this.velocity.y = -this.jumpForce;
+      this.jumping = true;
     }
 
     if (this.keys.up) {
-      this.entity.position.y -= 1;
+      this.velocity.y -= 0.5;
     }
 
     if (this.keys.down) {
-      this.entity.position.y += 1;
+      this.velocity.y += 0.1;
     }
 
     if (this.keys.left) {
-      this.entity.position.x -= 1;
+      this.velocity.x -= 0.1;
     }
 
     if (this.keys.right) {
-      this.entity.position.x += 1;
+      this.velocity.x += 0.1;
     }
+
+    this.velocity.y += this.gravity;
+
+    this.resolveMapCollisions(this.velocity);
+  }
+
+  resolveMapCollisions(delta: Vector2) {
+    this.getMapCoords(this.map, this.entity.position);
+
+    if (delta.y) {
+      this.entity.position.y += delta.y;
+      // Up
+      if (
+        this.checkCollision(this.map, [
+          { x: this.entity.position.x - 12, y: this.entity.position.y - 12 },
+          {
+            x: this.entity.position.x + 12 - 1,
+            y: this.entity.position.y - 12,
+          },
+        ])
+      ) {
+        // console.log("up");
+        this.entity.position.y =
+          Math.floor(this.entity.position.y / tilesize) * tilesize + 12;
+
+        this.velocity.y *= -0.5;
+      }
+
+      // Down
+      if (
+        this.checkCollision(this.map, [
+          { x: this.entity.position.x - 12, y: this.entity.position.y - 1 },
+          { x: this.entity.position.x + 12 - 1, y: this.entity.position.y - 1 },
+        ])
+      ) {
+        // console.log("down");
+        this.entity.position.y =
+          Math.floor(this.entity.position.y / tilesize) * tilesize;
+
+        this.velocity.y = 0;
+        this.jumping = false;
+      }
+    }
+
+    if (delta.x) {
+      this.entity.position.x += delta.x;
+      // right
+      if (
+        this.checkCollision(this.map, [
+          { x: this.entity.position.x + 12 - 1, y: this.entity.position.y - 1 },
+          {
+            x: this.entity.position.x + 12 - 1,
+            y: this.entity.position.y - 12,
+          },
+        ])
+      ) {
+        // console.log("right");
+        this.entity.position.x =
+          (Math.floor(this.entity.position.x / tilesize) + 1) * tilesize - 12;
+
+        this.velocity.x *= -1;
+        this.jumping = false;
+      }
+
+      // left
+      if (
+        this.checkCollision(this.map, [
+          { x: this.entity.position.x - 12, y: this.entity.position.y - 1 },
+          { x: this.entity.position.x - 12, y: this.entity.position.y - 12 },
+        ])
+      ) {
+        // console.log("left");
+        this.entity.position.x =
+          Math.floor(this.entity.position.x / tilesize) * tilesize + 12;
+
+        this.velocity.x *= -1;
+        this.jumping = false;
+      }
+    }
+  }
+
+  checkCollision(map: Tilemap, points: { x: number; y: number }[]) {
+    let collision = false;
+    points.forEach((point) => {
+      let tpos = this.getMapCoords(map, point);
+      if (map.data[tpos.y][tpos.x] !== 0) collision = true;
+    });
+    return collision;
   }
 
   draw(ctx: CanvasRenderingContext2D) {
@@ -98,6 +209,15 @@ class Player extends Behavior {
     drawRect(ctx, -12, -12, 24, 12);
     ctx.stroke();
     ctx.closePath();
+  }
+
+  getMapCoords(map: Tilemap, pos: { x: number; y: number }): Vector2 {
+    const mapPos = map.entity.position;
+    let playerTilePos = {
+      x: Math.floor((pos.x - mapPos.x) / tilesize),
+      y: Math.floor((pos.y - mapPos.y) / tilesize),
+    };
+    return new Vector2(playerTilePos.x, playerTilePos.y);
   }
 }
 
