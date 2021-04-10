@@ -19,10 +19,10 @@ class CameraTarget extends Behavior {
   update() {
     const self = this.entity;
     self.position = new Vector2(
-      self.position.x,
+      Math.min(this.player.position.x, 28 * 16 - 7 * 16),
       Math.min(this.player.position.y, self.position.y)
     );
-    self.game.cameraPos = self.game.cameraPos.lerp(self.position, 0.1);
+    self.game.cameraPos = self.game.cameraPos.lerp(self.position, 1);
 
     if (self.game.cameraPos.y - self.game.height / 2 < map.position.y) {
       // map.position.y -= 16 * 15;

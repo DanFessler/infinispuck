@@ -1,7 +1,9 @@
 import { RigidBody, Tilemap, Vector2 } from "../../engine";
 import Behavior from "../../engine/behavior";
 import map from "../entities/map";
-import shootSFX from "../../assets/audio/shoot.wav";
+import jumpSFX from "../../assets/audio/jump.wav";
+import bounceSFX from "../../assets/audio/bounce.wav";
+import landedSFX from "../../assets/audio/landed.wav";
 
 const tilesize = 16;
 
@@ -13,6 +15,8 @@ class Player extends Behavior {
   velocity: Vector2 = new Vector2(3, 0);
   gravity = 0.2;
   jumping = true;
+  grounded = false;
+
   jumpForce = 4.5;
 
   keys: {
@@ -97,9 +101,8 @@ class Player extends Behavior {
       console.log("Space");
       this.velocity.y = -this.jumpForce;
       this.jumping = true;
-      // let sound = new Audio(shootSFX);
-      // sound.volume = 0.25;
-      // sound.play();
+      this.grounded = false;
+      this.playSound(jumpSFX);
     }
 
     if (this.keys.up) {
@@ -158,6 +161,9 @@ class Player extends Behavior {
 
         this.velocity.y = 0;
         this.jumping = false;
+
+        if (!this.grounded) this.playSound(landedSFX);
+        this.grounded = true;
       }
     }
 
@@ -179,6 +185,7 @@ class Player extends Behavior {
 
         this.velocity.x *= -1;
         this.jumping = false;
+        this.playSound(bounceSFX);
       }
 
       // left
@@ -194,8 +201,15 @@ class Player extends Behavior {
 
         this.velocity.x *= -1;
         this.jumping = false;
+        this.playSound(bounceSFX);
       }
     }
+  }
+
+  playSound(url: string) {
+    let sound = new Audio(url);
+    sound.volume = 0.25;
+    sound.play();
   }
 
   checkCollision(map: Tilemap, points: { x: number; y: number }[]) {
